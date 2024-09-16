@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Property{% endblock %}
+
+{% block body %}
+    <h1>{{property.title}}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ property.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ property.description }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ property.type }}</td>
+            </tr>
+            <tr>
+                <th>M²</th>
+                <td>{{ property.meter }} m²</td>
+            </tr>
+            <tr>
+                <th>Planning</th>
+                <td>{{ property.planning ? property.planning|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de personnes</th>
+                <td>{{ property.maxGuest }}</td>
+            </tr>
+            <tr>
+                <th>Créé le</th>
+                <td>{{ property.createdAt ? property.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Modifier le</th>
+                <td>{{ property.updatedAt ? property.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de jour minimum</th>
+                <td>{{ property.minDay }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de jour maximum</th>
+                <td>{{ property.maxDay }}</td>
+            </tr>            
+            {% if is_granted('ROLE_ADMIN') %}
+                <tr>
+                    <th>En ligne</th>
+                    <td>{{ property.online ? 'Yes' : 'No' }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_property_index') }}">Retourner à la liste</a>
+
+    <a href="{{ path('app_property_edit', {'id': property.id}) }}">Modifier</a>
+
+    {{ include('property/_delete_form.html.twig') }}
+{% endblock %}

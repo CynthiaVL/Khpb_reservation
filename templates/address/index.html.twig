@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adresse{% endblock %}
+
+{% block body %}
+    {{form_start(address)}}
+        {{form_row (address.street, {
+            label : 'Rue : '
+        })}}
+        {{form_row (address.city, {
+            label : 'Ville : '
+        })}}
+        {{form_row (address.postalCode, {
+            label : 'Code Postal :'
+        })}}
+        {{form_row (address.country, {
+            label : 'Pays : '
+        })}}
+    {{form_end(address)}}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    {% if reservations is empty %}
+        <p>Aucune réservation pour le moment</p>
+    {% else %}
+        {% for reservation in reservations %}
+            {{reservation.user.name}}
+            {{reservation.property.title}}
+        {% endfor %}
+    {% endif %}
+
+
+{% endblock %}

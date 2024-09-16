@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <h1 class="red-title text-center">Inscription</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        <div class="row text-center mt-5">
+            <div class="col-6">
+                <div class="mb-2 form-group">
+                    {{ form_row(registrationForm.firstName, {
+                        label: 'Prénom :',
+                        label_attr : {'class' : 'label-registration'}
+                    }) }}
+                </div>
+                <div class="mb-2 form-group">
+                    {{ form_row(registrationForm.lastName, {
+                        label: 'Nom :',
+                        label_attr : {'class' : 'label-registration'}
+                    }) }}
+                </div>
+                <div class="mb-2 form-group">
+                    {{ form_row(registrationForm.email, {
+                        label : 'Email :',
+                        label_attr : {'class' : 'label-registration'}
+                    }) }}
+                </div>
+                <div class="mb-2 form-group">
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Mot de passe :',
+                        label_attr : {'class' : 'label-registration'}
+                    }) }}
+                </div>
+                <div class="mb-2 form-group">
+                    {{ form_row(registrationForm.birthdate, {
+                        label: 'Date d\'anniversaire :',
+                        label_attr : {'class' : 'label-registration'}
+                    }) }}
+                </div>
+                <div class="mb-2 form-group">
+                    {{ form_row(registrationForm.phoneNumber, {
+                        label: 'Numéro de portable :',
+                        label_attr : {'class' : 'label-registration'}
+                    }) }}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-2 form-group">
+                    {{form_row(registrationForm.address.street, {
+                        label: 'Rue :', 
+                        label_attr : {'class' : 'label-registration'}
+                    })}}
+                </div>
+                <div class="mb-2 form-group">
+                    {{form_row(registrationForm.address.city, {
+                        label: 'Ville :',
+                        label_attr : {'class' : 'label-registration'}
+                    })}}
+                </div>
+                <div class="mb-2 form-group">
+                    {{form_row(registrationForm.address.postal_code, {
+                        label: 'Code Postal :',
+                        label_attr : {'class' : 'label-registration'}
+                    })}}
+                </div>
+                <div class="mb-2 form-group">
+                    {{form_row(registrationForm.address.country, {
+                        label: 'Pays :',
+                        label_attr : {'class' : 'label-registration'}
+                    })}}
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            {{ form_row(registrationForm.agreeTerms, {
+                label: 'Accepter les termes :'
+            }) }}
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            {{form_row(registrationForm.roles)}}
+        {% endif %}
+        
+        <div class="div-btn-submit">
+            <button type="submit" class="btn btn-submit"><strong>Enregistrer</strong></button>
+        </div>
+        <div class="account-link">
+            <p>Vous avez déjà un compte?</p>
+            <a class="btn btn-login" type="button" href="{{ path('app_login') }}">Connectez vous</a>
+        </div>
+{% endblock %}

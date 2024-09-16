@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les logements{% endblock %}
+
+{% block body %}
+    <form action="" method="post">
+        <div class="select-date-property-index">
+            <div class="card-row-property-index row">
+                <div class="col-5 col-lg-3 card-property-index">
+                    <div class="card-body-property-index d-flex m-1">
+                        <p class="me-5"><strong>Date d'arrivée:</strong></p>
+                        <input class="input-date-property-index" type="date" id="arrivalDate" name="date">
+                    </div>
+                </div>
+                <div class="col-5 col-lg-3 card-property-index">
+                    <div class="card-body-property-index d-flex m-1">
+                        <p class="me-5"><strong>Date de départ:</strong></p>
+                        <input class="input-date-property-index" type="date" id="departureDate" name="date">
+                    </div>
+                </div>
+                <div class="col-5 col-lg-3 card-property-index">
+                    <div class="card-body-property-index d-flex m-1">
+                        <p class="me-5"><strong>Type :</strong></p>
+                            <label class"label-type" for="studio">
+                                <input type="checkbox" name="studio" id="studio">
+                                Studio
+                            </label>
+                            <label class"label-type" for="T1">
+                                <input type="checkbox" name="T1" id="studio">
+                                T 1
+                            </label>
+                            <label class"label-type" value="T2">
+                                <input type="checkbox" name="T2" id="studio">
+                                T 2
+                            </label>
+                            <label class"label-type" value="T3">
+                                <input type="checkbox" name="T3" id="studio">
+                                T 3
+                            </label>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn-validate-date-property-index mt-2"><strong>Valider</strong></button>
+                </div>
+            </div>        
+        </div>
+    </form>
+
+    {% for property in properties %}
+        <div class="card">
+            <h3 class="property-card-title">{{ property.title }}</h3>
+
+            <div class"property-card-badge">
+                <p class="property-card-badge-type">{{ property.type }}</p>
+                <p class="property-card-badge-meter">{{ property.meter }} m²</p>
+            </div>
+            <a class="property-card-button-view-property" href="{{ path('app_property_show', {'id': property.id}) }}">Voir le logement</a>
+ 
+        </div>            
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_property_new', { 'step': 1 }) }}">Créer un nouveau logement</a>
+        {% endif %} 
+    {% else %}
+        <div>
+            <p class="error-card-property">Aucune information trouvée</p>
+            {% if is_granted('ROLE_ADMIN') %}
+               <a href="{{ path('app_property_new', { 'step': 1 }) }}">Ajouter un logement</a>
+            {% endif %} 
+        </div>
+    {% endfor %}
+
+{% endblock %}
