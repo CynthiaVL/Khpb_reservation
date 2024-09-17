@@ -82,12 +82,16 @@
         {% if is_granted('ROLE_ADMIN') %}
             {{form_row(registrationForm.roles)}}
         {% endif %}
+            {{ form_rest(registrationForm) }}
         
         <div class="div-btn-submit">
             <button type="submit" class="btn btn-submit"><strong>Enregistrer</strong></button>
         </div>
+    {{ form_end(registrationForm) }}
         <div class="account-link">
             <p>Vous avez déjà un compte?</p>
             <a class="btn btn-login" type="button" href="{{ path('app_login') }}">Connectez vous</a>
         </div>
+
+
 {% endblock %}

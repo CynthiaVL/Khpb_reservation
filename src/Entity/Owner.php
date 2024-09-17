@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OwnerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OwnerRepository::class)]
@@ -19,9 +21,13 @@ class Owner
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $rib = null;
 
-    #[ORM\OneToOne(inversedBy: 'owner', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Property $property = null;
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Property::class ,cascade: ['persist', 'remove'])]
+    private Collection $properties;
+
+    public function __construct()
+    {
+        $this->properties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,15 +65,30 @@ class Owner
         return $this;
     }
 
-    public function getProperty(): ?Property
+    public function getProperty(): ?Collection
     {
-        return $this->property;
+        return $this->properties;
     }
 
-    public function setProperty(Property $property): static
+    public function addProperty(Property $property): static
     {
-        $this->property = $property;
-
+        if (!$this->properties->contains($property)) {
+            $this->properties->add($property);
+            $property->setOwner($this);
+        }
+    
+        return $this;
+    }
+    
+    public function removeProperty(Property $property): static
+    {
+        if ($this->properties->removeElement($property)) {
+            // Set the owning side to null (unless already changed)
+            if ($property->getOwner() === $this) {
+                $property->setOwner(null);
+            }
+        }
+    
         return $this;
     }
 }

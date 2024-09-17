@@ -64,7 +64,8 @@ class Property
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToOne(mappedBy: 'property', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Owner::class, inversedBy: 'properties', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Owner $owner = null;
 
     /**
@@ -310,15 +311,9 @@ class Property
         return $this->owner;
     }
 
-    public function setOwner(Owner $owner): static
+    public function setOwner(?Owner $owner): static
     {
-        // set the owning side of the relation if necessary
-        if ($owner->getProperty() !== $this) {
-            $owner->setProperty($this);
-        }
-
         $this->owner = $owner;
-
         return $this;
     }
 

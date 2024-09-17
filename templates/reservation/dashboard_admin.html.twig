@@ -3,14 +3,27 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-    {% if reservations is empty %}
-        <p>Aucune réservation pour le moment</p>
-    {% else %}
-        {% for reservation in reservations %}
-            {{reservation.user.name}}
-            {{reservation.property.title}}
-        {% endfor %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% if reservations is empty %}
+            <p>Aucune réservation pour le moment</p>
+        {% else %}
+            {% for reservation in reservations %}
+                {{reservation.user.firstName}}
+                {{reservation.property.title}}
+                {{reservation.checkIn}}
+                {{reservation.checkOut}}
+                {{reservation.totalPrice}}
+            {% endfor %}
+        {% endif %}
+    {% elseif is_granted('ROLE_EMPLOYED')%}
+        {% if reservations is empty %}
+            <p>Aucune réservation pour le moment</p>
+        {% else %}
+            {% for reservation in reservations %}
+                {{reservation.property.title}}
+                {{reservation.check_in}}
+                {{reservation.check_out}}
+            {% endfor %}
+        {% endif %}
     {% endif %}
-
-
 {% endblock %}

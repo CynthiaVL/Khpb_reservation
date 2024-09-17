@@ -6,6 +6,7 @@ use App\Repository\AddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\PostInc;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -22,7 +23,7 @@ class Address
     private ?string $city = null;
 
     #[ORM\Column]
-    private ?int $postal_code = null;
+    private ?string $postal_code = null;
 
     #[ORM\Column(length: 255)]
     private ?string $country = null;
@@ -81,12 +82,12 @@ class Address
         return $this;
     }
 
-    public function getPostalCode(): ?int
+    public function getPostalCode(): ?string
     {
         return $this->postal_code;
     }
 
-    public function setPostalCode(int $postal_code): static
+    public function setPostalCode(string $postal_code): static
     {
         $this->postal_code = $postal_code;
 
